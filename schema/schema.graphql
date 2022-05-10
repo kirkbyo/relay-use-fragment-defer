@@ -1,0 +1,44 @@
+type Tweet {
+  id: ID!
+  body: String
+  date: Date
+  author: User
+  stats: Stat
+}
+
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+}
+
+type TweetConnection {
+  edges: [Tweet]
+  pageInfo: PageInfo
+}
+
+type User {
+  id: ID!
+  username: String
+  firstName: String
+  lastName: String
+  fullName: String
+  avatarUrl: Url
+}
+
+type Stat {
+  views: Int
+  likes: Int
+  retweets: Int
+  responses: Int
+}
+
+scalar Url
+scalar Date
+
+directive @defer(label: String, if: Boolean = true) on FRAGMENT_SPREAD
+
+type Query {
+  tweetsByUserId(userId: ID!): TweetConnection
+}
